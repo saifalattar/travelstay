@@ -16,9 +16,11 @@ class TravelStayButton extends ElevatedButton {
             child: child,
             style: hasBorder!
                 ? ButtonStyle(
+                    minimumSize: MaterialStatePropertyAll(Size(120, 60)),
                     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(color: Color(0xFF106ce4), width: 2))),
+                        side: BorderSide(
+                            color: themeData.primaryColor, width: 3))),
                     backgroundColor: MaterialStatePropertyAll(Colors.white))
                 : ButtonStyle(
                     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
@@ -29,8 +31,7 @@ class TravelStayButton extends ElevatedButton {
 }
 
 class TravelStayAppBar extends PreferredSize {
-  final int currentIndex;
-  TravelStayAppBar(this.currentIndex)
+  TravelStayAppBar()
       : super(
             preferredSize: Size(double.infinity, 150),
             child: Container(

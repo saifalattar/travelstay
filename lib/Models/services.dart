@@ -2,6 +2,7 @@ abstract class _ServiceProviderInterface {
   Future login_request();
   Future signup_request();
   Future getAvailableHotels_request();
+  Future getAvailableCities_request();
 }
 
 class ServiceProvider implements _ServiceProviderInterface {
@@ -17,4 +18,7 @@ class ServiceProvider implements _ServiceProviderInterface {
 
   @override
   Future getAvailableHotels_request() async {}
+
+  @override
+  Future getAvailableCities_request() async {}
 }
