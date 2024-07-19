@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelstay/bloc/cubit.dart';
-import 'package:travelstay/bloc/states.dart';
+import 'package:travelstay/Models/hotel.dart';
+import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 import 'package:travelstay/views/HomeScreen/components.dart';
 
@@ -13,7 +12,11 @@ class HomeScreen extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-        appBar: TravelStayAppBar(),
+        key: scaffoldKey,
+        drawer: TravelStayDrawer(context),
+        appBar: TravelStayAppBar(
+          context: context,
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -22,21 +25,24 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      HomeBanner(),
+                      const HomeBanner(),
                       SizedBox(
                         height: width > 700 ? 0 : 200,
                       )
                     ],
                   ),
-                  SearchForHotelsBar()
+                  const SearchForHotelsBar()
                 ],
               ),
-              RecentSearches(),
-              SizedBox(
+              const RecentSearches(),
+              const SizedBox(
                 height: 100,
               ),
-              Wrap(
+              const Wrap(
                 children: [],
+              ),
+              const TravelStayFooter(
+                isUnbeatableStackShown: true,
               )
             ],
           ),

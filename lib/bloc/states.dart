@@ -9,3 +9,8 @@ class SearchCities extends TravelStayStates {
 
   SearchCities({required this.resultCities});
 }
+
+class ChooseDateRange extends TravelStayStates {
+  final DateTime? start, end;
+  ChooseDateRange({required this.start, required this.end});
+}
