@@ -61,4 +61,19 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
         backgroundColor: Colors.white,
         primaryColor: themeData.primaryColor);
   }
+
+  void updateAdultNumber(int number, bool isIncrement) {
+    isIncrement ? number += 1 : number -= 1;
+    emit(AdultsNumber(number: number));
+  }
+
+  void updateChildrenNumber(int number, bool isIncrement) {
+    isIncrement ? number += 1 : number -= 1;
+    emit(ChildrenNumber(number: number));
+  }
+
+  void updateRoomNumber(int number, bool isIncrement) {
+    isIncrement ? number += 1 : number -= 1;
+    emit(RoomsNumber(number: number));
+  }
 }

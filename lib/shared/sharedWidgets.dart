@@ -49,7 +49,8 @@ class TravelStayButton extends ElevatedButton {
                     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                         side: BorderSide(
-                            color: themeData.secondaryHeaderColor, width: 3))),
+                            color: color ?? themeData.secondaryHeaderColor,
+                            width: 3))),
                     backgroundColor:
                         const MaterialStatePropertyAll(Colors.white))
                 : ButtonStyle(
@@ -231,10 +232,10 @@ class TravelStayTextField extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       constraints: BoxConstraints(
           maxWidth: isFullWidth
-              ? width * 0.62
-              : width > 800
-                  ? width * 0.3
-                  : width * 0.62),
+              ? width * 0.83
+              : width > 1000
+                  ? width * 0.4
+                  : width * 0.83),
       margin: const EdgeInsets.all(15),
       child: DottedBorder(
         dashPattern: const [5, 4],

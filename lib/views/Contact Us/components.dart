@@ -70,8 +70,9 @@ class ContactUsMessageContainer extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(20),
-      constraints:
-          BoxConstraints(maxWidth: width > 800 ? width * 0.70 : width * 0.75),
+      constraints: BoxConstraints(
+          maxWidth: width > 800 ? width * 0.90 : width * 0.95,
+          minWidth: width * 0.85),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

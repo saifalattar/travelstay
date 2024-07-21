@@ -19,7 +19,7 @@ class AboutUs extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const MasjidBanner(title: "Abous Us"),
+            const MasjidBanner(title: "About Us"),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: Column(

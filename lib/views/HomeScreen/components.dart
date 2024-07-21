@@ -1,3 +1,4 @@
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:travelstay/shared/sharedExtensions.dart";
@@ -53,7 +54,7 @@ class SearchCityBar extends StatelessWidget {
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
               child: DropdownMenu(
-                textStyle: themeData.textTheme.labelMedium,
+                textStyle: themeData.textTheme.labelLarge,
                 hintText: "Where are you going?",
                 width: width > 800 ? width / 3.2 : width * 0.9,
                 enableFilter: true,
@@ -144,9 +145,9 @@ class _DateRangePickerState extends State<DateRangePicker> {
   }
 }
 
-int adults = 0;
-int children = 0;
-int rooms = 0;
+int adultsNumbers = 1;
+int childrenNumbers = 0;
+int roomsNumbers = 1;
 
 class NumberOfPersons extends StatelessWidget {
   final void Function() onPressed;
@@ -171,12 +172,15 @@ class NumberOfPersons extends StatelessWidget {
               color: Colors.grey.shade800,
               size: 22,
             ),
-            Text(
-              "\t\t $adults adults . $children children . $rooms rooms",
-              style: checkInDate == null
-                  ? themeData.textTheme.labelMedium
-                  : themeData.textTheme.labelLarge,
-            )
+            BlocBuilder<TravelStayCubit, TravelStayStates>(
+                builder: (context, state) {
+              return Text(
+                "\t\t $adultsNumbers adults . $childrenNumbers children . $roomsNumbers rooms",
+                style: checkInDate == null
+                    ? themeData.textTheme.labelMedium
+                    : themeData.textTheme.labelLarge,
+              );
+            })
           ],
         ),
       ),
@@ -211,14 +215,262 @@ class _SearchForHotelsBarState extends State<SearchForHotelsBar> {
           showDialog(
               context: context,
               builder: (c) {
-                return const AlertDialog(
-                    content: Column(
-                  children: [
-                    Row(
-                      children: [Text("Adults")],
-                    )
-                  ],
-                ));
+                return AlertDialog(
+                    backgroundColor: Colors.white,
+                    content: SizedBox(
+                      height: 250,
+                      width: 300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Adults : ",
+                                    style: themeData.textTheme.labelLarge,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.black),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    child: Row(
+                                      children: [
+                                        BlocBuilder<TravelStayCubit,
+                                                TravelStayStates>(
+                                            builder: (context, state) {
+                                          if (context
+                                              .read<TravelStayCubit>()
+                                              .state is AdultsNumber) {
+                                            adultsNumbers = (context
+                                                    .read<TravelStayCubit>()
+                                                    .state as AdultsNumber)
+                                                .number!;
+                                          }
+                                          return IconButton(
+                                              color: themeData.primaryColor,
+                                              disabledColor: Colors.grey,
+                                              onPressed: adultsNumbers == 1
+                                                  ? null
+                                                  : () {
+                                                      TravelStayCubit.GET(
+                                                              context)
+                                                          .updateAdultNumber(
+                                                              adultsNumbers,
+                                                              false);
+                                                    },
+                                              icon: const Icon(
+                                                Icons.remove,
+                                              ));
+                                        }),
+                                        BlocBuilder<TravelStayCubit,
+                                                TravelStayStates>(
+                                            builder: (ctx, state) {
+                                          if (context
+                                              .read<TravelStayCubit>()
+                                              .state is AdultsNumber) {
+                                            adultsNumbers = (context
+                                                    .read<TravelStayCubit>()
+                                                    .state as AdultsNumber)
+                                                .number!;
+                                          }
+                                          return Text(
+                                            "  $adultsNumbers  ",
+                                            style:
+                                                themeData.textTheme.labelLarge,
+                                          );
+                                        }),
+                                        IconButton(
+                                            color: themeData.primaryColor,
+                                            disabledColor: Colors.grey,
+                                            onPressed: () {
+                                              TravelStayCubit.GET(context)
+                                                  .updateAdultNumber(
+                                                      adultsNumbers, true);
+                                            },
+                                            icon: const Icon(
+                                              Icons.add,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Children : ",
+                                    style: themeData.textTheme.labelLarge,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.black),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    child: Row(
+                                      children: [
+                                        BlocBuilder<TravelStayCubit,
+                                                TravelStayStates>(
+                                            builder: (context, state) {
+                                          if (context
+                                              .read<TravelStayCubit>()
+                                              .state is ChildrenNumber) {
+                                            childrenNumbers = (context
+                                                    .read<TravelStayCubit>()
+                                                    .state as ChildrenNumber)
+                                                .number!;
+                                          }
+                                          return IconButton(
+                                              color: themeData.primaryColor,
+                                              disabledColor: Colors.grey,
+                                              onPressed: childrenNumbers == 0
+                                                  ? null
+                                                  : () {
+                                                      TravelStayCubit.GET(
+                                                              context)
+                                                          .updateChildrenNumber(
+                                                              childrenNumbers,
+                                                              false);
+                                                    },
+                                              icon: const Icon(
+                                                Icons.remove,
+                                              ));
+                                        }),
+                                        BlocBuilder<TravelStayCubit,
+                                                TravelStayStates>(
+                                            builder: (ctx, state) {
+                                          if (context
+                                              .read<TravelStayCubit>()
+                                              .state is ChildrenNumber) {
+                                            childrenNumbers = (context
+                                                    .read<TravelStayCubit>()
+                                                    .state as ChildrenNumber)
+                                                .number!;
+                                          }
+                                          return Text(
+                                            "  $childrenNumbers  ",
+                                            style:
+                                                themeData.textTheme.labelLarge,
+                                          );
+                                        }),
+                                        IconButton(
+                                            color: themeData.primaryColor,
+                                            disabledColor: Colors.grey,
+                                            onPressed: () {
+                                              TravelStayCubit.GET(context)
+                                                  .updateChildrenNumber(
+                                                      childrenNumbers, true);
+                                            },
+                                            icon: const Icon(
+                                              Icons.add,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rooms : ",
+                                    style: themeData.textTheme.labelLarge,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.black),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    child: Row(
+                                      children: [
+                                        BlocBuilder<TravelStayCubit,
+                                                TravelStayStates>(
+                                            builder: (context, state) {
+                                          if (context
+                                              .read<TravelStayCubit>()
+                                              .state is RoomsNumber) {
+                                            roomsNumbers = (context
+                                                    .read<TravelStayCubit>()
+                                                    .state as RoomsNumber)
+                                                .number!;
+                                          }
+                                          return IconButton(
+                                              color: themeData.primaryColor,
+                                              disabledColor: Colors.grey,
+                                              onPressed: roomsNumbers == 1
+                                                  ? null
+                                                  : () {
+                                                      TravelStayCubit.GET(
+                                                              context)
+                                                          .updateRoomNumber(
+                                                              roomsNumbers,
+                                                              false);
+                                                    },
+                                              icon: const Icon(
+                                                Icons.remove,
+                                              ));
+                                        }),
+                                        BlocBuilder<TravelStayCubit,
+                                                TravelStayStates>(
+                                            builder: (ctx, state) {
+                                          if (context
+                                              .read<TravelStayCubit>()
+                                              .state is RoomsNumber) {
+                                            roomsNumbers = (context
+                                                    .read<TravelStayCubit>()
+                                                    .state as RoomsNumber)
+                                                .number!;
+                                          }
+                                          return Text(
+                                            "  $roomsNumbers  ",
+                                            style:
+                                                themeData.textTheme.labelLarge,
+                                          );
+                                        }),
+                                        IconButton(
+                                            color: themeData.primaryColor,
+                                            disabledColor: Colors.grey,
+                                            onPressed: () {
+                                              TravelStayCubit.GET(context)
+                                                  .updateRoomNumber(
+                                                      roomsNumbers, true);
+                                            },
+                                            icon: const Icon(
+                                              Icons.add,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          TravelStayButton(
+                              color: themeData.primaryColor,
+                              hasBorder: true,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "Done",
+                                style: themeData.textTheme.titleMedium,
+                              ))
+                        ],
+                      ),
+                    ));
               });
         },
       ),
@@ -229,6 +481,7 @@ class _SearchForHotelsBarState extends State<SearchForHotelsBar> {
         width: width > 1300 ? width / 15 : width * 0.91,
         height: 50,
         child: TravelStayButton(
+          color: themeData.primaryColor,
           onPressed: () {},
           hasBorder: true,
           child: Text(
@@ -380,10 +633,60 @@ class RecentSearches extends StatelessWidget {
 }
 
 class CountrySearchWidget extends StatelessWidget {
-  const CountrySearchWidget({super.key});
+  final String countryFlag, countryName, imageURL;
+  const CountrySearchWidget(
+      {super.key,
+      required this.countryName,
+      required this.countryFlag,
+      required this.imageURL});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    double width = MediaQuery.sizeOf(context).width;
+    return Container(
+      margin: const EdgeInsets.all(10),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      constraints: BoxConstraints(
+          maxWidth: width < 700 ? width * 0.9 : width * 0.3,
+          minWidth: width < 700 ? width * 0.8 : width * 0.2,
+          minHeight: 50,
+          maxHeight: 250),
+      child: InkWell(
+        onTap: () {},
+        child: Stack(
+          children: [
+            Image.network(
+              imageURL,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                children: [
+                  Text(
+                    "$countryName ",
+                    style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CountryFlag.fromCountryCode(
+                    countryFlag,
+                    width: 30,
+                    height: 20,
+                    shape: const RoundedRectangle(5),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
