@@ -1,9 +1,6 @@
 import 'package:animated_rating_stars/animated_rating_stars.dart';
-import 'package:animated_rating_stars/animated_rating_stars_web.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 

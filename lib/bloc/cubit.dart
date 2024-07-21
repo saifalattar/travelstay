@@ -1,3 +1,4 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -51,15 +52,21 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
   }
 
   Future chooseDateRange(BuildContext context) async {
-    showCustomDateRangePicker(context,
-        dismissible: true,
-        minimumDate: DateTime.now(),
-        maximumDate: DateTime(2040), onApplyClick: (start, end) {
-      emit(ChooseDateRange(start: start, end: end));
-    },
-        onCancelClick: () {},
-        backgroundColor: Colors.white,
-        primaryColor: themeData.primaryColor);
+    await showCalendarDatePicker2Dialog(
+      context: context,
+      config: CalendarDatePicker2WithActionButtonsConfig(
+          firstDate: DateTime.now(),
+          selectedDayHighlightColor: themeData.primaryColor,
+          selectedRangeHighlightColor: themeData.primaryColor.withOpacity(0.2),
+          calendarType: CalendarDatePicker2Type.range),
+      dialogSize: Size(context.size!.width * 0.8, context.size!.width * 0.8),
+      value: [],
+      borderRadius: BorderRadius.circular(15),
+    ).then((value) {
+      if (value != null) {
+        emit(ChooseDateRange(start: value[0], end: value[1]));
+      }
+    });
   }
 
   void updateAdultNumber(int number, bool isIncrement) {

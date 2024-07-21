@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 import 'package:travelstay/views/About%20Us/components.dart';

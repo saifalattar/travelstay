@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelstay/Models/hotel.dart';
-import 'package:travelstay/bloc/cubit.dart';
-import 'package:travelstay/bloc/states.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 import 'package:travelstay/views/HomeScreen/components.dart';
