@@ -1,5 +1,4 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,14 +14,49 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
   static TravelStayCubit GET(context) =>
       BlocProvider.of<TravelStayCubit>(context);
 
-  Future logIn() async {
-    Response response = await _services.login_request();
+  Future<Map?> logIn({
+    required String? userEmail,
+    required String? password,
+  }) async {
+    Map? response;
+
+    await _services
+        .login_request(userEmail: userEmail, password: password)
+        .then((value) {
+      response = {"success": true};
+    }).catchError((onError) {
+      print(onError.response.data);
+      response = {"success": false, "error": "E-mail already exists"};
+    });
+    return response;
     // Some logic
   }
 
-  Future signUp() async {
-    Response response = await _services.signup_request();
-    // Some logic
+  Future<Map?> signUp(
+      {required String? userEmail,
+      required String? password,
+      required String? userFirstName,
+      required String? userLastName}) async {
+    Map? response;
+    await _services
+        .signup_request(
+            userEmail: userEmail,
+            userFirstName: userFirstName,
+            password: password,
+            userLastName: userLastName)
+        .then((value) {
+      response = {"success": true};
+    }).catchError((onError) {
+      if (onError.response.data == 400) {
+        response = {"success": false, "error": "E-mail already exists"};
+      } else {
+        response = {
+          "success": false,
+          "error": "Something error happened, Try again later or contact us"
+        };
+      }
+    });
+    return response;
   }
 
   Future getAvailableHotels() async {

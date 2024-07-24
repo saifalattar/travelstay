@@ -124,7 +124,10 @@ class TravelStayAppBar extends PreferredSize {
                                     children: [
                                       TravelStayButton(
                                           hasBorder: true,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Functions.navigateWithInSameTab(
+                                                context, "/Registeration");
+                                          },
                                           child: Text(
                                             "Sign Up",
                                             style:

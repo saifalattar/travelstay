@@ -5,6 +5,7 @@ import 'package:travelstay/Models/hotel.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/views/About%20Us/aboutUs.dart';
+import 'package:travelstay/views/Authentication/SignUp/signUp.dart';
 import 'package:travelstay/views/Charity/charity.dart';
 import 'package:travelstay/views/Contact%20Us/contactUs.dart';
 import 'package:travelstay/views/HomeScreen/homeScreen.dart';
@@ -22,6 +23,8 @@ void main() {
         GoRoute(path: "/", builder: (ctx, state) => const HomeScreen()),
         GoRoute(path: "/AboutUs", builder: (ctx, state) => const AboutUs()),
         GoRoute(path: "/ContactUs", builder: (ctx, state) => const ContactUs()),
+        GoRoute(
+            path: "/Registeration", builder: (ctx, state) => const SignUp()),
         GoRoute(
             path: "/Charity",
             builder: (ctx, state) {

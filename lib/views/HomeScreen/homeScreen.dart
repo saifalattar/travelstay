@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 import 'package:travelstay/views/HomeScreen/components.dart';
@@ -9,7 +10,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
-    int adults = 0;
     return Scaffold(
         key: scaffoldKey,
         drawer: TravelStayDrawer(context),
@@ -19,6 +19,20 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              TextButton(
+                  onPressed: () async {
+                    var r = await TravelStayCubit.GET(context)
+                        .logIn(
+                            userEmail: "saifff@gmail.com",
+                            // userFirstName: "d",
+                            // userLastName: "d",
+                            password: "saif@2002")
+                        .then((value) => print(value))
+                        .catchError((onError) {
+                      print(onError);
+                    });
+                  },
+                  child: const Text("gg")),
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
