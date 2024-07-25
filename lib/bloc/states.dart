@@ -29,3 +29,8 @@ class RoomsNumber extends TravelStayStates {
   final int? number;
   RoomsNumber({this.number = 0});
 }
+
+class PasswordVisibility extends TravelStayStates {
+  final bool value;
+  PasswordVisibility({required this.value});
+}

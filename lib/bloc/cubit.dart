@@ -23,13 +23,12 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
     await _services
         .login_request(userEmail: userEmail, password: password)
         .then((value) {
-      response = {"success": true};
+      response = {"success": true, "token": value.data["payload"]["token"]};
     }).catchError((onError) {
       print(onError.response.data);
-      response = {"success": false, "error": "E-mail already exists"};
+      response = {"success": false, "error": "E-mail doesn't exists"};
     });
     return response;
-    // Some logic
   }
 
   Future<Map?> signUp(
@@ -47,7 +46,7 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
         .then((value) {
       response = {"success": true};
     }).catchError((onError) {
-      if (onError.response.data == 400) {
+      if (onError.response.statusCode == 400) {
         response = {"success": false, "error": "E-mail already exists"};
       } else {
         response = {
@@ -116,5 +115,9 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
   void updateRoomNumber(int number, bool isIncrement) {
     isIncrement ? number += 1 : number -= 1;
     emit(RoomsNumber(number: number));
+  }
+
+  void updatePasswordVisibility(bool value) {
+    emit(PasswordVisibility(value: value));
   }
 }
