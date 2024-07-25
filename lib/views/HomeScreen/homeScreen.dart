@@ -19,20 +19,6 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              TextButton(
-                  onPressed: () async {
-                    var r = await TravelStayCubit.GET(context)
-                        .logIn(
-                            userEmail: "saifff@gmail.com",
-                            // userFirstName: "d",
-                            // userLastName: "d",
-                            password: "saif@2002")
-                        .then((value) => print(value))
-                        .catchError((onError) {
-                      print(onError);
-                    });
-                  },
-                  child: const Text("gg")),
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [

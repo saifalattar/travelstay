@@ -5,6 +5,7 @@ import 'package:travelstay/Models/hotel.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/views/About%20Us/aboutUs.dart';
+import 'package:travelstay/views/Authentication/Login/login.dart';
 import 'package:travelstay/views/Authentication/SignUp/signUp.dart';
 import 'package:travelstay/views/Charity/charity.dart';
 import 'package:travelstay/views/Contact%20Us/contactUs.dart';
@@ -37,7 +38,8 @@ void main() {
             }),
         GoRoute(
             path: "/TermsAndConditions",
-            builder: (ctx, state) => const TermsAndConditions())
+            builder: (ctx, state) => const TermsAndConditions()),
+        GoRoute(path: "/Login", builder: (ctx, state) => const LogIn())
       ]),
     ),
   ));

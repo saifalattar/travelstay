@@ -133,9 +133,15 @@ class TravelStayAppBar extends PreferredSize {
                                             style:
                                                 themeData.textTheme.titleMedium,
                                           )),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       TravelStayButton(
                                           hasBorder: true,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Functions.navigateWithInSameTab(
+                                                context, "/Login");
+                                          },
                                           child: Text(
                                             "Log In",
                                             style:
@@ -754,7 +760,10 @@ class TravelStayDrawer extends Drawer {
                           width: double.infinity,
                           child: TravelStayButton(
                               hasBorder: true,
-                              onPressed: () {},
+                              onPressed: () {
+                                Functions.navigateWithInSameTab(
+                                    context, "/Registeration");
+                              },
                               child: Text(
                                 "Sign Up",
                                 style: themeData.textTheme.titleMedium,
@@ -767,7 +776,10 @@ class TravelStayDrawer extends Drawer {
                           width: double.infinity,
                           child: TravelStayButton(
                               hasBorder: true,
-                              onPressed: () {},
+                              onPressed: () {
+                                Functions.navigateWithInSameTab(
+                                    context, "/Login");
+                              },
                               child: Text(
                                 "Log In",
                                 style: themeData.textTheme.titleMedium,
