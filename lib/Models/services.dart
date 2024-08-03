@@ -22,8 +22,8 @@ class ServiceProvider implements _ServiceProviderInterface {
   @override
   Future login_request(
       {required String? userEmail, required String? password}) async {
-    Response loggedUser = await Dio().put(
-        'http://cloudcft.com:8048/api/authenticate',
+    Response loggedUser = await Dio().post(
+        'http://cloudcft.com:8048/api/authenticate/',
         data: {"username": userEmail, "password": password});
     return loggedUser;
   }
@@ -35,7 +35,7 @@ class ServiceProvider implements _ServiceProviderInterface {
       required String? userFirstName,
       required String? userLastName}) async {
     Response createUser =
-        await Dio().post('http://cloudcft.com:8048/api/user/register', data: {
+        await Dio().post('http://cloudcft.com:8048/api/user/register/', data: {
       "email": userEmail,
       "firstName": userFirstName,
       "lastName": userLastName,

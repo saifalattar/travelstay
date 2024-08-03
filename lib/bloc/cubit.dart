@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelstay/Models/localDatabase.dart';
 import 'package:travelstay/Models/services.dart';
 import 'package:travelstay/bloc/states.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
@@ -14,6 +15,22 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
   static TravelStayCubit GET(context) =>
       BlocProvider.of<TravelStayCubit>(context);
 
+  Future get isSignedIn async {
+    var localData = LocalData();
+    if (await localData.containsKey("token")) {
+      USERTOKEN = await localData.getData("token");
+      USEREMAIL = await localData.getData("email");
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future get signOut async {
+    LocalData localData = LocalData();
+    await localData.deleteAll();
+  }
+
   Future<Map?> logIn({
     required String? userEmail,
     required String? password,
@@ -22,11 +39,16 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
 
     await _services
         .login_request(userEmail: userEmail, password: password)
-        .then((value) {
+        .then((value) async {
       response = {"success": true, "token": value.data["payload"]["token"]};
+      LocalData localData = LocalData();
+      await localData.saveData("token", "${response!["token"]}");
+      await localData.saveData("email", "$userEmail");
+      USERTOKEN = response!["token"];
+      USEREMAIL = userEmail;
     }).catchError((onError) {
       print(onError.response.data);
-      response = {"success": false, "error": "E-mail doesn't exists"};
+      response = {"success": false, "error": "Wrong email or password"};
     });
     return response;
   }

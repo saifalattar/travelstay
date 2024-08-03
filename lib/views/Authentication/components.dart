@@ -312,71 +312,17 @@ class _LogInFormState extends State<LogInForm> {
       TravelStayButton(
           color: themeData.primaryColor,
           onPressed: () async {
-            bool areEqual = false, areEmpyties = true, isStrong = false;
-            if (RegExp(
-                    r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
-                .hasMatch(password.text)) {
-              isStrong = true;
-            }
-            if (userEmail.text.isNotEmpty &&
-                userFirstName.text.isNotEmpty &&
-                userLastName.text.isNotEmpty &&
-                password.text.isNotEmpty &&
-                confirmPassword.text.isNotEmpty) {
-              areEmpyties = false;
-            }
-            if (password.text == confirmPassword.text) {
-              areEqual = true;
-            }
-            if (areEqual && !areEmpyties && isAccepted) {
-              Map? response = await TravelStayCubit.GET(context).signUp(
-                  userEmail: userEmail.text,
-                  password: password.text,
-                  userFirstName: userFirstName.text,
-                  userLastName: userLastName.text);
-              if (response!["success"] == true) {
-                Functions.navigateWithInSameTab(context, "/Login");
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            var response = await TravelStayCubit.GET(context)
+                .logIn(userEmail: userEmail.text, password: password.text);
+            if (response!["success"]) {
+              Functions.navigateWithInSameTab(context, "/");
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.red,
                   content: Text(
                     "${response["error"]}",
                     style: themeData.textTheme.bodyMedium,
-                  ),
-                  backgroundColor: Colors.red,
-                ));
-              }
-            } else if (areEmpyties) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  "All fields are required",
-                  style: themeData.textTheme.bodyMedium,
-                ),
-                backgroundColor: Colors.red,
-              ));
-            } else if (!isStrong) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  "Password is weak",
-                  style: themeData.textTheme.bodyMedium,
-                ),
-                backgroundColor: Colors.red,
-              ));
-            } else if (!areEqual) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  "Passwords must be equal each others",
-                  style: themeData.textTheme.bodyMedium,
-                ),
-                backgroundColor: Colors.red,
-              ));
-            } else if (!isAccepted) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  "You must accept our Terms And Conditions",
-                  style: themeData.textTheme.bodyMedium,
-                ),
-                backgroundColor: Colors.red,
-              ));
+                  )));
             }
           },
           child: Text(

@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import "dart:html" as html;
@@ -120,35 +121,63 @@ class TravelStayAppBar extends PreferredSize {
                                               width: 30))
                                     ],
                                   ),
-                                  Row(
-                                    children: [
-                                      TravelStayButton(
-                                          hasBorder: true,
-                                          onPressed: () {
-                                            Functions.navigateWithInSameTab(
-                                                context, "/Registeration");
-                                          },
-                                          child: Text(
-                                            "Sign Up",
-                                            style:
-                                                themeData.textTheme.titleMedium,
-                                          )),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      TravelStayButton(
-                                          hasBorder: true,
-                                          onPressed: () {
-                                            Functions.navigateWithInSameTab(
-                                                context, "/Login");
-                                          },
-                                          child: Text(
-                                            "Log In",
-                                            style:
-                                                themeData.textTheme.titleMedium,
-                                          ))
-                                    ],
-                                  )
+                                  FutureBuilder(
+                                      future: TravelStayCubit.GET(context)
+                                          .isSignedIn,
+                                      builder: (ctx, ss) {
+                                        if (ss.connectionState ==
+                                            ConnectionState.done) {
+                                          if (ss.data) {
+                                            return Row(
+                                              children: [
+                                                const CircleAvatar(
+                                                  child: Icon(Icons.person),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text("$USEREMAIL")
+                                              ],
+                                            );
+                                          } else {
+                                            return Row(
+                                              children: [
+                                                TravelStayButton(
+                                                    hasBorder: true,
+                                                    onPressed: () {
+                                                      Functions
+                                                          .navigateWithInSameTab(
+                                                              context,
+                                                              "/Registeration");
+                                                    },
+                                                    child: Text(
+                                                      "Sign Up",
+                                                      style: themeData.textTheme
+                                                          .titleMedium,
+                                                    )),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                TravelStayButton(
+                                                    hasBorder: true,
+                                                    onPressed: () {
+                                                      Functions
+                                                          .navigateWithInSameTab(
+                                                              context,
+                                                              "/Login");
+                                                    },
+                                                    child: Text(
+                                                      "Log In",
+                                                      style: themeData.textTheme
+                                                          .titleMedium,
+                                                    ))
+                                              ],
+                                            );
+                                          }
+                                        } else {
+                                          return const CircularProgressIndicator();
+                                        }
+                                      })
                                 ],
                               ),
                             ),
@@ -754,39 +783,80 @@ class TravelStayDrawer extends Drawer {
                     const SizedBox(
                       height: 20,
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: TravelStayButton(
-                              hasBorder: true,
-                              onPressed: () {
-                                Functions.navigateWithInSameTab(
-                                    context, "/Registeration");
-                              },
-                              child: Text(
-                                "Sign Up",
-                                style: themeData.textTheme.titleMedium,
-                              )),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: TravelStayButton(
-                              hasBorder: true,
-                              onPressed: () {
-                                Functions.navigateWithInSameTab(
-                                    context, "/Login");
-                              },
-                              child: Text(
-                                "Log In",
-                                style: themeData.textTheme.titleMedium,
-                              )),
-                        )
-                      ],
-                    ),
+                    FutureBuilder(
+                        future: TravelStayCubit.GET(context).isSignedIn,
+                        builder: (ctx, ss) {
+                          if (ss.connectionState == ConnectionState.done) {
+                            if (ss.data) {
+                              return SizedBox(
+                                width: double.infinity,
+                                child: TravelStayButton(
+                                    hasBorder: true,
+                                    color: Colors.red,
+                                    onPressed: () {
+                                      TravelStayCubit.GET(context)
+                                          .signOut
+                                          .then((value) =>
+                                              Functions.navigateWithInSameTab(
+                                                  context, "/Login"))
+                                          .catchError((onError) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                backgroundColor: Colors.red,
+                                                content: Text(
+                                                  "Something Error Happened",
+                                                  style: themeData
+                                                      .textTheme.bodyMedium,
+                                                )));
+                                      });
+                                    },
+                                    child: const Text(
+                                      "Sign Out",
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.red),
+                                    )),
+                              );
+                            } else {
+                              return Column(
+                                children: [
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: TravelStayButton(
+                                        hasBorder: true,
+                                        onPressed: () {
+                                          Functions.navigateWithInSameTab(
+                                              context, "/Registeration");
+                                        },
+                                        child: Text(
+                                          "Sign Up",
+                                          style:
+                                              themeData.textTheme.titleMedium,
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: TravelStayButton(
+                                        hasBorder: true,
+                                        onPressed: () {
+                                          Functions.navigateWithInSameTab(
+                                              context, "/Login");
+                                        },
+                                        child: Text(
+                                          "Log In",
+                                          style:
+                                              themeData.textTheme.titleMedium,
+                                        )),
+                                  )
+                                ],
+                              );
+                            }
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        })
                   ],
                 ),
               )

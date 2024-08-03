@@ -12,11 +12,12 @@ import 'package:travelstay/views/Contact%20Us/contactUs.dart';
 import 'package:travelstay/views/HomeScreen/homeScreen.dart';
 import 'package:travelstay/views/TermsAndConditions/termsAndConditions.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider<TravelStayCubit>(create: (context) => TravelStayCubit()),
+      BlocProvider<TravelStayCubit>(
+          create: (context) => TravelStayCubit()..isSignedIn),
     ],
     child: MaterialApp.router(
       theme: themeData,
