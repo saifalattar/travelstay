@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedVariables.dart';

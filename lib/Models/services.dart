@@ -11,7 +11,7 @@ abstract class _ServiceProviderInterface {
       required String? userFirstName,
       required String? userLastName});
   Future getAvailableHotels_request();
-  Future getAvailableCities_request();
+  Future getAvailableCities_request({required String city});
 }
 
 class ServiceProvider implements _ServiceProviderInterface {
@@ -48,5 +48,9 @@ class ServiceProvider implements _ServiceProviderInterface {
   Future getAvailableHotels_request() async {}
 
   @override
-  Future getAvailableCities_request() async {}
+  Future getAvailableCities_request({required String city}) async {
+    var response = await Dio().get(
+        "http://cloudcft.com:8048/hotel/api/util/cities/by-name?name=$city");
+    return response;
+  }
 }

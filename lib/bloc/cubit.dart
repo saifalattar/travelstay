@@ -85,25 +85,25 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
     // Some logic
   }
 
-  Future<void> getAvailableCities() async {
-    // List<String> resultCities = await _services.getAvailableCities_request();
-    List<DropdownMenuEntry> resultCities = [
-      const DropdownMenuEntry(
-          value: "Dubai",
-          label: "Dubai",
-          labelWidget: LocationListTile(country: "UAE", city: "Dubai")),
-      const DropdownMenuEntry(
-          value: "Cairo",
-          label: "Cairo",
-          labelWidget: LocationListTile(country: "Egypt", city: "Cairo")),
-      const DropdownMenuEntry(
-          value: "Mekkah",
-          label: "MEkkah",
-          labelWidget:
-              LocationListTile(country: "Saudi Arabia", city: "Mekkah")),
-    ];
+  Future<void> getAvailableCities(
+      {required String lastSearch, required String city}) async {
+    if (lastSearch != city) {
+      Response response =
+          await _services.getAvailableCities_request(city: city);
+      List<DropdownMenuEntry> resultCities =
+          (response.data["payload"]["cities"]["content"] as List).map((val) {
+        return DropdownMenuEntry(
+            labelWidget: LocationListTile(
+                country: val["country"]["name"], city: val["name"]),
+            value: val["country"]["name"],
+            label: val["name"]);
+      }).toList();
 
-    emit(SearchCities(resultCities: resultCities));
+      emit(SearchCities(resultCities: resultCities));
+    }
+
+    // if(resultCities.statusCode != 200){
+    // }
   }
 
   Future chooseDateRange(BuildContext context) async {

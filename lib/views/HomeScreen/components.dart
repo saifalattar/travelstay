@@ -44,47 +44,45 @@ class SearchCityBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
-
-    return FutureBuilder(
-        future: context.read<TravelStayCubit>().getAvailableCities(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Container(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: DropdownMenu(
-                textStyle: themeData.textTheme.labelLarge,
-                hintText: "Where are you going?",
-                width: width > 800 ? width / 3.2 : width * 0.9,
-                enableFilter: true,
-                inputDecorationTheme: const InputDecorationTheme(
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                dropdownMenuEntries:
-                    (context.read<TravelStayCubit>().state as SearchCities)
-                        .resultCities,
-                leadingIcon: const Icon(Icons.bed_outlined),
-                enableSearch: true,
-                searchCallback: (entries, query) {
-                  int index = entries.indexWhere(
-                      (element) => element.label.toLowerCase().contains(query));
-                  if (index == -1) {
-                    return null;
-                  } else {
-                    return index;
-                  }
-                },
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+    String lastQuery = "";
+    return BlocBuilder<TravelStayCubit, TravelStayStates>(
+        builder: (context, state) {
+      return Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+        child: DropdownMenu(
+          textStyle: themeData.textTheme.labelLarge,
+          hintText: "Where are you going?",
+          width: width > 800 ? width / 3.2 : width * 0.9,
+          enableFilter: true,
+          inputDecorationTheme: const InputDecorationTheme(
+            border: InputBorder.none,
+            filled: true,
+            fillColor: Colors.white,
+          ),
+          dropdownMenuEntries:
+              (context.read<TravelStayCubit>().state is SearchCities)
+                  ? (context.read<TravelStayCubit>().state as SearchCities)
+                      .resultCities
+                  : [],
+          leadingIcon: const Icon(Icons.bed_outlined),
+          enableSearch: true,
+          searchCallback: (entries, query) {
+            context
+                .read<TravelStayCubit>()
+                .getAvailableCities(lastSearch: lastQuery, city: query);
+            lastQuery = query;
+            int index = entries.indexWhere(
+                (element) => element.label.toLowerCase().contains(query));
+            if (index == -1) {
+              return null;
+            } else {
+              return index;
+            }
+          },
+        ),
+      );
+    });
   }
 }
 
