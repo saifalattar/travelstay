@@ -12,10 +12,12 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
   TravelStayCubit() : super(InitialState());
   final ServiceProvider _services = ServiceProvider();
 
-  static TravelStayCubit GET(context) =>
+  static TravelStayCubit get(context) =>
       BlocProvider.of<TravelStayCubit>(context);
 
-  Future get isSignedIn async {
+  TextEditingController searchCityController = TextEditingController();
+
+  Future isSignedIn() async {
     var localData = LocalData();
     if (await localData.containsKey("token")) {
       USERTOKEN = await localData.getData("token");
@@ -59,6 +61,7 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
       required String? userFirstName,
       required String? userLastName}) async {
     Map? response;
+
     await _services
         .signup_request(
             userEmail: userEmail,
@@ -80,30 +83,27 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
     return response;
   }
 
-  Future getAvailableHotels() async {
-    Response response = await _services.getAvailableHotels_request();
-    // Some logic
-  }
-
+  Response? response;
+  List<DropdownMenuEntry>? resultCities;
+  String? cityId;
+  int? index;
   Future<void> getAvailableCities(
       {required String lastSearch, required String city}) async {
     if (lastSearch != city) {
-      Response response =
-          await _services.getAvailableCities_request(city: city);
-      List<DropdownMenuEntry> resultCities =
-          (response.data["payload"]["cities"]["content"] as List).map((val) {
+      response = await _services.getAvailableCities_request(city: city);
+      resultCities =
+          (response?.data["payload"]["cities"]["content"] as List).map((val) {
         return DropdownMenuEntry(
             labelWidget: LocationListTile(
-                country: val["country"]["name"], city: val["name"]),
+                cityId: val["id"],
+                country: val["country"]["name"],
+                city: val["name"]),
             value: val["country"]["name"],
             label: val["name"]);
       }).toList();
 
-      emit(SearchCities(resultCities: resultCities));
+      emit(SearchCities(resultCities: resultCities!));
     }
-
-    // if(resultCities.statusCode != 200){
-    // }
   }
 
   Future chooseDateRange(BuildContext context) async {
@@ -122,6 +122,25 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
         emit(ChooseDateRange(start: value[0], end: value[1]));
       }
     });
+  }
+
+  Future sendSupportForm(
+      {required String email,
+      required String message,
+      required String mobile}) async {
+    Response response = await _services.send_support_form(
+        email: email, message: message, mobile: mobile);
+    return response;
+  }
+
+  Future initiatePayment(
+      {required double amount,
+      required String paymentDescription,
+      required String currency}) async {
+    var response = await _services.initiatePayment(
+        amount: amount,
+        paymentDescription: paymentDescription,
+        currency: currency);
   }
 
   void updateAdultNumber(int number, bool isIncrement) {

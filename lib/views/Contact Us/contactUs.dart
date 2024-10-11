@@ -11,7 +11,6 @@ class ContactUs extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       drawer: TravelStayDrawer(context),
-      key: scaffoldKey,
       appBar: TravelStayAppBar(context: context),
       body: SingleChildScrollView(
         child: Column(

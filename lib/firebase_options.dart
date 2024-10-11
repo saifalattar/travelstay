@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBkZA34RNdGU4j2HIFKM1uAu2m0PwA4cYc',
-    appId: '1:451171401671:web:45b0d34badf30192dbe3e2',
-    messagingSenderId: '451171401671',
-    projectId: 'travelstay-66d67',
-    authDomain: 'travelstay-66d67.firebaseapp.com',
-    storageBucket: 'travelstay-66d67.appspot.com',
-    measurementId: 'G-QZNFVEQ09R',
+    apiKey: 'AIzaSyCx5Rut1XlkTBDmJlzcGa-ENfLf1KaWbws',
+    appId: '1:895090008251:web:e415f6a1f928ba0e49499e',
+    messagingSenderId: '895090008251',
+    projectId: 'travelstay247-b91d8',
+    authDomain: 'travelstay247-b91d8.firebaseapp.com',
+    storageBucket: 'travelstay247-b91d8.appspot.com',
+    measurementId: 'G-12PQHL1B6C',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDNM9ih_C_t1BCc816NogbCHoflE_KsSUk',
-    appId: '1:451171401671:android:91d9e1743d31cea2dbe3e2',
-    messagingSenderId: '451171401671',
-    projectId: 'travelstay-66d67',
-    storageBucket: 'travelstay-66d67.appspot.com',
+    apiKey: 'AIzaSyAAITGZS3eIMOnGONE4I6RVyPjCSZnEnHs',
+    appId: '1:895090008251:android:b0d061ed84aef26249499e',
+    messagingSenderId: '895090008251',
+    projectId: 'travelstay247-b91d8',
+    storageBucket: 'travelstay247-b91d8.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAvnv-ngBXjlHBqGkRXffb6QtaMvQBMbSc',
-    appId: '1:451171401671:ios:0ec38014dfa63f9cdbe3e2',
-    messagingSenderId: '451171401671',
-    projectId: 'travelstay-66d67',
-    storageBucket: 'travelstay-66d67.appspot.com',
+    apiKey: 'AIzaSyA8jnkB2-vnqQkyWQGcw-V1kvQbHnf7qJI',
+    appId: '1:895090008251:ios:00588c50fd4a481849499e',
+    messagingSenderId: '895090008251',
+    projectId: 'travelstay247-b91d8',
+    storageBucket: 'travelstay247-b91d8.appspot.com',
     iosBundleId: 'com.example.travelstay',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAvnv-ngBXjlHBqGkRXffb6QtaMvQBMbSc',
-    appId: '1:451171401671:ios:0ec38014dfa63f9cdbe3e2',
-    messagingSenderId: '451171401671',
-    projectId: 'travelstay-66d67',
-    storageBucket: 'travelstay-66d67.appspot.com',
+    apiKey: 'AIzaSyA8jnkB2-vnqQkyWQGcw-V1kvQbHnf7qJI',
+    appId: '1:895090008251:ios:00588c50fd4a481849499e',
+    messagingSenderId: '895090008251',
+    projectId: 'travelstay247-b91d8',
+    storageBucket: 'travelstay247-b91d8.appspot.com',
     iosBundleId: 'com.example.travelstay',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBkZA34RNdGU4j2HIFKM1uAu2m0PwA4cYc',
-    appId: '1:451171401671:web:dca56f4c9a4e5379dbe3e2',
-    messagingSenderId: '451171401671',
-    projectId: 'travelstay-66d67',
-    authDomain: 'travelstay-66d67.firebaseapp.com',
-    storageBucket: 'travelstay-66d67.appspot.com',
-    measurementId: 'G-ZXD5L3MWDS',
+    apiKey: 'AIzaSyCx5Rut1XlkTBDmJlzcGa-ENfLf1KaWbws',
+    appId: '1:895090008251:web:1fe98ce2d6a0843849499e',
+    messagingSenderId: '895090008251',
+    projectId: 'travelstay247-b91d8',
+    authDomain: 'travelstay247-b91d8.firebaseapp.com',
+    storageBucket: 'travelstay247-b91d8.appspot.com',
+    measurementId: 'G-1SVVW1CPJV',
   );
+
 }

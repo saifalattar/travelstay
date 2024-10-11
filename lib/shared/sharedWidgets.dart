@@ -1,10 +1,11 @@
+import "dart:html" as html;
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
-import "dart:html" as html;
-
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Here we are going to add the most used widgets in the website
@@ -18,7 +19,10 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Functions.navigateWithInSameTab(context, "/");
+        Functions.navigateWithInSameTab(
+          context,
+          "/",
+        );
       },
       child: Image.asset(
         "assets/logo.png",
@@ -46,20 +50,19 @@ class TravelStayButton extends ElevatedButton {
             child: child,
             style: hasBorder!
                 ? ButtonStyle(
-                    minimumSize: const MaterialStatePropertyAll(Size(100, 50)),
-                    shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                    minimumSize: const WidgetStatePropertyAll(Size(100, 50)),
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                         side: BorderSide(
                             color: color ?? themeData.secondaryHeaderColor,
                             width: 3))),
-                    backgroundColor:
-                        const MaterialStatePropertyAll(Colors.white))
+                    backgroundColor: const WidgetStatePropertyAll(Colors.white))
                 : ButtonStyle(
-                    minimumSize: const MaterialStatePropertyAll(Size(100, 50)),
-                    shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                    minimumSize: const WidgetStatePropertyAll(Size(100, 50)),
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     )),
-                    backgroundColor: MaterialStatePropertyAll(
+                    backgroundColor: WidgetStatePropertyAll(
                         color ?? themeData.secondaryHeaderColor)));
 }
 
@@ -122,8 +125,8 @@ class TravelStayAppBar extends PreferredSize {
                                     ],
                                   ),
                                   FutureBuilder(
-                                      future: TravelStayCubit.GET(context)
-                                          .isSignedIn,
+                                      future: TravelStayCubit.get(context)
+                                          .isSignedIn(),
                                       builder: (ctx, ss) {
                                         if (ss.connectionState ==
                                             ConnectionState.done) {
@@ -200,7 +203,7 @@ class TravelStayAppBar extends PreferredSize {
                         MediaQuery.sizeOf(context).width < 800
                             ? IconButton(
                                 onPressed: () {
-                                  scaffoldKey.currentState!.openDrawer();
+                                  // key.currentState!.openDrawer();
                                 },
                                 icon: const Icon(
                                   Icons.menu,
@@ -211,7 +214,9 @@ class TravelStayAppBar extends PreferredSize {
                                   TextButton(
                                       onPressed: () {
                                         Functions.navigateWithInSameTab(
-                                            context, "/");
+                                          context,
+                                          "/",
+                                        );
                                       },
                                       child: Text(
                                         "Home",
@@ -221,7 +226,9 @@ class TravelStayAppBar extends PreferredSize {
                                   TextButton(
                                       onPressed: () {
                                         Functions.navigateWithInSameTab(
-                                            context, "/AboutUs");
+                                          context,
+                                          "/AboutUs",
+                                        );
                                       },
                                       child: Text("About",
                                           style: themeData
@@ -229,7 +236,9 @@ class TravelStayAppBar extends PreferredSize {
                                   TextButton(
                                       onPressed: () {
                                         Functions.navigateWithInSameTab(
-                                            context, "/Charity");
+                                          context,
+                                          "/Charity",
+                                        );
                                       },
                                       child: Text("Charity",
                                           style: themeData
@@ -237,7 +246,9 @@ class TravelStayAppBar extends PreferredSize {
                                   TextButton(
                                       onPressed: () {
                                         Functions.navigateWithInSameTab(
-                                            context, "/ContactUs");
+                                          context,
+                                          "/ContactUs",
+                                        );
                                       },
                                       child: Text("Contact",
                                           style: themeData
@@ -417,7 +428,10 @@ class MasjidBanner extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    Functions.navigateWithInSameTab(context, "/");
+                    Functions.navigateWithInSameTab(
+                      context,
+                      "/",
+                    );
                   },
                   child: Text(
                     "Home",
@@ -660,8 +674,10 @@ class TravelStayFooter extends StatelessWidget {
 
 class TravelStayDrawer extends Drawer {
   final BuildContext context;
-  TravelStayDrawer(this.context, {super.key})
-      : super(
+  TravelStayDrawer(
+    this.context, {
+    super.key,
+  }) : super(
           backgroundColor: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -687,7 +703,10 @@ class TravelStayDrawer extends Drawer {
                       ],
                     ),
                     onTap: () {
-                      Functions.navigateWithInSameTab(context, "/");
+                      Functions.navigateWithInSameTab(
+                        context,
+                        "/",
+                      );
                     },
                   ),
                   ListTile(
@@ -704,7 +723,10 @@ class TravelStayDrawer extends Drawer {
                       ],
                     ),
                     onTap: () {
-                      Functions.navigateWithInSameTab(context, "/AboutUs");
+                      Functions.navigateWithInSameTab(
+                        context,
+                        "/AboutUs",
+                      );
                     },
                   ),
                   ListTile(
@@ -721,7 +743,7 @@ class TravelStayDrawer extends Drawer {
                       ],
                     ),
                     onTap: () {
-                      Functions.navigateWithInSameTab(context, "/Charity");
+                      Functions.navigateWithNewTab("/Charity");
                     },
                   ),
                   ListTile(
@@ -738,7 +760,7 @@ class TravelStayDrawer extends Drawer {
                       ],
                     ),
                     onTap: () {
-                      Functions.navigateWithInSameTab(context, "/ContactUs");
+                      Functions.navigateWithNewTab("/ContactUs");
                     },
                   ),
                 ],
@@ -784,7 +806,7 @@ class TravelStayDrawer extends Drawer {
                       height: 20,
                     ),
                     FutureBuilder(
-                        future: TravelStayCubit.GET(context).isSignedIn,
+                        future: context.read<TravelStayCubit>().isSignedIn(),
                         builder: (ctx, ss) {
                           if (ss.connectionState == ConnectionState.done) {
                             if (ss.data) {
@@ -794,7 +816,8 @@ class TravelStayDrawer extends Drawer {
                                     hasBorder: true,
                                     color: Colors.red,
                                     onPressed: () {
-                                      TravelStayCubit.GET(context)
+                                      context
+                                          .read<TravelStayCubit>()
                                           .signOut
                                           .then((value) =>
                                               Functions.navigateWithInSameTab(

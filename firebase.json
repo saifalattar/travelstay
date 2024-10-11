@@ -3,27 +3,27 @@
     "platforms": {
       "android": {
         "default": {
-          "projectId": "travelstay-66d67",
-          "appId": "1:451171401671:android:91d9e1743d31cea2dbe3e2",
+          "projectId": "travelstay247-b91d8",
+          "appId": "1:895090008251:android:b0d061ed84aef26249499e",
           "fileOutput": "android/app/google-services.json"
         }
       },
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "travelstay-66d67",
+          "projectId": "travelstay247-b91d8",
           "configurations": {
-            "android": "1:451171401671:android:91d9e1743d31cea2dbe3e2",
-            "ios": "1:451171401671:ios:0ec38014dfa63f9cdbe3e2",
-            "macos": "1:451171401671:ios:0ec38014dfa63f9cdbe3e2",
-            "web": "1:451171401671:web:45b0d34badf30192dbe3e2",
-            "windows": "1:451171401671:web:dca56f4c9a4e5379dbe3e2"
+            "android": "1:895090008251:android:b0d061ed84aef26249499e",
+            "ios": "1:895090008251:ios:00588c50fd4a481849499e",
+            "macos": "1:895090008251:ios:00588c50fd4a481849499e",
+            "web": "1:895090008251:web:e415f6a1f928ba0e49499e",
+            "windows": "1:895090008251:web:1fe98ce2d6a0843849499e"
           }
         }
       }
     }
   },
   "hosting": {
-    "public": "build/web",
+    "public": "buid/web",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -31,9 +31,29 @@
     ],
     "rewrites": [
       {
+        "source": "/api/**",
+        "destination": "proxy"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ]
 }

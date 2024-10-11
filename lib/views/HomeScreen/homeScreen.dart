@@ -1,9 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:travelstay/bloc/cubit.dart';
-import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
-import 'package:travelstay/views/HomeScreen/components.dart';
+import 'package:travelstay/views/HomeScreen/country_search.dart';
+import 'package:travelstay/views/HomeScreen/recent_search.dart';
+import 'package:travelstay/views/HomeScreen/search_for_hotels_Bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,8 +11,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-        key: scaffoldKey,
-        drawer: TravelStayDrawer(context),
+        drawer: TravelStayDrawer(
+          context,
+        ),
         appBar: TravelStayAppBar(
           context: context,
         ),

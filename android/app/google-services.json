@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "451171401671",
-    "project_id": "travelstay-66d67",
-    "storage_bucket": "travelstay-66d67.appspot.com"
+    "project_number": "895090008251",
+    "project_id": "travelstay247-b91d8",
+    "storage_bucket": "travelstay247-b91d8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:451171401671:android:91d9e1743d31cea2dbe3e2",
+        "mobilesdk_app_id": "1:895090008251:android:b0d061ed84aef26249499e",
         "android_client_info": {
           "package_name": "com.example.travelstay"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDNM9ih_C_t1BCc816NogbCHoflE_KsSUk"
+          "current_key": "AIzaSyAAITGZS3eIMOnGONE4I6RVyPjCSZnEnHs"
         }
       ],
       "services": {

@@ -10,7 +10,6 @@ class Charity extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      key: scaffoldKey,
       drawer: TravelStayDrawer(context),
       appBar: TravelStayAppBar(context: context),
       body: SingleChildScrollView(

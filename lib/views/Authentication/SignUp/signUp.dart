@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 import 'package:travelstay/views/Authentication/components.dart';
 
@@ -9,7 +8,6 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       drawer: TravelStayDrawer(context),
       appBar: TravelStayAppBar(context: context),
       body: const SingleChildScrollView(

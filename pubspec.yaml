@@ -38,9 +38,12 @@ dependencies:
   dotted_border: ^2.1.0
   go_router: ^14.2.1
   animated_rating_stars: ^1.0.1
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   flutter_markdown: ^0.7.3
-  dio: ^5.5.0+1
+  logger: ^2.4.0
+  dio: ^5.7.0
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
   flutter:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.

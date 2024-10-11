@@ -10,7 +10,6 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      key: scaffoldKey,
       appBar: TravelStayAppBar(
         context: context,
       ),

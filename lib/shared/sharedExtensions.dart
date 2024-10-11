@@ -42,7 +42,7 @@ extension getSpecificDate on DateTime {
       "Nov",
       "Dec"
     ];
-    date += months[month];
+    date += months[month - 1];
     return date;
   }
 }

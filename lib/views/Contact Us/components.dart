@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 
@@ -116,7 +117,31 @@ class ContactUsMessageContainer extends StatelessWidget {
               ],
             ),
             TravelStayButton(
-                onPressed: () {},
+                onPressed: () {
+                  TravelStayCubit.get(context)
+                      .sendSupportForm(
+                          email: email_contact.text,
+                          message: message_contact.text,
+                          mobile: mobile_contact.text)
+                      .then((onValue) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        "Message sent successfully",
+                        style: themeData.textTheme.bodyMedium,
+                      ),
+                      backgroundColor: Colors.green,
+                    ));
+                  }).catchError((onError) {
+                    print(onError);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        "$onError",
+                        style: themeData.textTheme.bodyMedium,
+                      ),
+                      backgroundColor: Colors.red,
+                    ));
+                  });
+                },
                 child: Text(
                   "Send Message",
                   style: themeData.textTheme.headlineLarge,

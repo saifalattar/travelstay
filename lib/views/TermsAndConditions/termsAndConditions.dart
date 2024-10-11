@@ -12,7 +12,6 @@ class TermsAndConditions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       appBar: TravelStayAppBar(context: context),
       drawer: TravelStayDrawer(context),
       body: SingleChildScrollView(

@@ -1,8 +1,6 @@
 import "dart:html" as html;
 
 import "package:flutter/material.dart";
-import "package:go_router/go_router.dart";
-import "package:travelstay/shared/sharedVariables.dart";
 
 class Functions {
   static void navigateWithNewTab(String newScreen) {
@@ -11,11 +9,11 @@ class Functions {
 
   static void navigateWithInSameTab(
     BuildContext context,
-    String newScreen,
-  ) {
-    scaffoldKey.currentState!.isDrawerOpen
-        ? scaffoldKey.currentState!.closeDrawer()
-        : null;
-    context.go(newScreen);
+    String newScreen, {
+    Object? query,
+  }) {
+    // key.currentState!.isDrawerOpen ? key.currentState!.closeDrawer() : null;
+    // context.go(newScreen, extra: query);
+    Navigator.pushNamed(context, newScreen, arguments: query);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-final scaffoldKey = GlobalKey<ScaffoldState>();
+final navigatorKey = GlobalKey<NavigatorState>();
+
 String? USEREMAIL, USERNAME, USERTOKEN;
 ThemeData themeData = ThemeData(
     secondaryHeaderColor: const Color(0xFF02b4ea),

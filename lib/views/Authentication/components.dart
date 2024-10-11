@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelstay/bloc/cubit.dart';
@@ -51,7 +50,7 @@ class AuthenticationTextField extends StatelessWidget {
                         return !state
                             ? InkWell(
                                 onTap: () {
-                                  TravelStayCubit.GET(context)
+                                  TravelStayCubit.get(context)
                                       .updatePasswordVisibility(true);
                                 },
                                 child: Icon(
@@ -61,7 +60,7 @@ class AuthenticationTextField extends StatelessWidget {
                               )
                             : InkWell(
                                 onTap: () {
-                                  TravelStayCubit.GET(context)
+                                  TravelStayCubit.get(context)
                                       .updatePasswordVisibility(false);
                                 },
                                 child: Icon(
@@ -72,7 +71,7 @@ class AuthenticationTextField extends StatelessWidget {
                       }
                       return InkWell(
                         onTap: () {
-                          TravelStayCubit.GET(context)
+                          TravelStayCubit.get(context)
                               .updatePasswordVisibility(false);
                         },
                         child: Icon(
@@ -194,13 +193,20 @@ class _RegisterationFormState extends State<RegisterationForm> {
               areEqual = true;
             }
             if (areEqual && !areEmpyties && isAccepted) {
-              Map? response = await TravelStayCubit.GET(context).signUp(
+              Map? response = await TravelStayCubit.get(context).signUp(
                   userEmail: userEmail.text,
                   password: password.text,
                   userFirstName: userFirstName.text,
                   userLastName: userLastName.text);
               if (response!["success"] == true) {
                 Functions.navigateWithInSameTab(context, "/Login");
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    "Account created successfully",
+                    style: themeData.textTheme.bodyMedium,
+                  ),
+                  backgroundColor: Colors.green,
+                ));
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
@@ -312,7 +318,7 @@ class _LogInFormState extends State<LogInForm> {
       TravelStayButton(
           color: themeData.primaryColor,
           onPressed: () async {
-            var response = await TravelStayCubit.GET(context)
+            var response = await TravelStayCubit.get(context)
                 .logIn(userEmail: userEmail.text, password: password.text);
             if (response!["success"]) {
               Functions.navigateWithInSameTab(context, "/");
