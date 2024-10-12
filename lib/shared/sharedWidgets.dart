@@ -3,6 +3,9 @@ import "dart:html" as html;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_popup/flutter_popup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travelstay/Models/localDatabase.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
@@ -139,7 +142,39 @@ class TravelStayAppBar extends PreferredSize {
                                                 const SizedBox(
                                                   width: 10,
                                                 ),
-                                                Text("$USEREMAIL")
+                                                CustomPopup(
+                                                  content: SizedBox(
+                                                    height: 100,
+                                                    width: 200,
+                                                    child: Column(
+                                                      children: [
+                                                        TravelStayButton(
+                                                          onPressed: () async {
+                                                            var localData =
+                                                                LocalData();
+                                                            await localData
+                                                                .deleteAll();
+                                                            USEREMAIL = null;
+                                                            USERNAME = null;
+                                                            USERTOKEN = null;
+                                                            Functions
+                                                                .navigateWithInSameTab(
+                                                                    context,
+                                                                    "/");
+                                                          },
+                                                          color: Colors.red,
+                                                          child: const Text(
+                                                            "Sign Out",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  child: Text("$USEREMAIL"),
+                                                )
                                               ],
                                             );
                                           } else {

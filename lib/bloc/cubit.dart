@@ -22,8 +22,11 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
     if (await localData.containsKey("token")) {
       USERTOKEN = await localData.getData("token");
       USEREMAIL = await localData.getData("email");
+      print("true");
+
       return true;
     } else {
+      print("FALSE");
       return false;
     }
   }
@@ -83,6 +86,11 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
     return response;
   }
 
+  Future forgotPassword({required String? userEmail}) async {
+    Response response = await _services.forgot_password(userEmail: userEmail);
+    return response;
+  }
+
   Response? response;
   List<DropdownMenuEntry>? resultCities;
   String? cityId;
@@ -129,6 +137,15 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
       required String message,
       required String mobile}) async {
     Response response = await _services.send_support_form(
+        email: email, message: message, mobile: mobile);
+    return response;
+  }
+
+  Future sendFeedbackForm(
+      {required String email,
+      required String message,
+      required String mobile}) async {
+    Response response = await _services.send_feedback_form(
         email: email, message: message, mobile: mobile);
     return response;
   }

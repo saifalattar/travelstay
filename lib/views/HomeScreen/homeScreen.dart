@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 import 'package:travelstay/views/HomeScreen/country_search.dart';
 import 'package:travelstay/views/HomeScreen/recent_search.dart';

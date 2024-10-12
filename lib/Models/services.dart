@@ -10,6 +10,9 @@ abstract class _ServiceProviderInterface {
     required String? userEmail,
     required String? password,
   });
+
+  Future forgot_password({required String? userEmail});
+
   Future signup_request(
       {required String? userEmail,
       required String? password,
@@ -22,6 +25,9 @@ abstract class _ServiceProviderInterface {
       required String currency});
 
   Future send_support_form(
+      {required String email, required String message, required String mobile});
+
+  Future send_feedback_form(
       {required String email, required String message, required String mobile});
 
   Future getAvailableRoom(
@@ -129,6 +135,32 @@ class ServiceProvider implements _ServiceProviderInterface {
           "description": paymentDescription,
           "email": USEREMAIL.toString()
         }));
+    return response;
+  }
+
+  @override
+  Future send_feedback_form(
+      {required String email,
+      required String message,
+      required String mobile}) async {
+    Response response = await Dio().post(
+        "http://cloudcft.com:8048/api/auth/user/support",
+        options: Options(headers: {"authorization": "Bearer $USERTOKEN"}),
+        data: {
+          "subject": "Feature request",
+          "email": email,
+          "mobile": mobile,
+          "message": message
+        });
+    return response;
+  }
+
+  @override
+  Future forgot_password({required String? userEmail}) async {
+    Response response = await Dio()
+        .post("http://cloudcft.com:8048/api/user/forgot-password", data: {
+      "email": userEmail,
+    });
     return response;
   }
 }

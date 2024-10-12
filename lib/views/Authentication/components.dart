@@ -280,6 +280,8 @@ class _RegisterationFormState extends State<RegisterationForm> {
   }
 }
 
+var forgotPasswordField = TextEditingController();
+
 class LogInForm extends StatefulWidget {
   const LogInForm({super.key});
 
@@ -309,7 +311,63 @@ class _LogInFormState extends State<LogInForm> {
         icon: Icons.lock,
       ),
       InkWell(
-        onTap: () {},
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return Dialog(
+                  child: Container(
+                      width: 500,
+                      height: 200,
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "  Forgot Password",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              CloseButton()
+                            ],
+                          ),
+                          const Divider(
+                            thickness: 1.5,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextField(
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 16),
+                              decoration: const InputDecoration(
+                                  hintText: "Email",
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black))),
+                              controller: forgotPasswordField,
+                            ),
+                          ),
+                          TravelStayButton(
+                              color: Colors.black,
+                              onPressed: () {
+                                TravelStayCubit.get(context).forgotPassword(
+                                    userEmail: forgotPasswordField.text);
+                              },
+                              child: const Text(
+                                "Forgot Password",
+                                style: TextStyle(color: Colors.white),
+                              ))
+                        ],
+                      )),
+                );
+              });
+        },
         child: Text(
           "Forget Your Password?",
           style: themeData.textTheme.titleMedium,

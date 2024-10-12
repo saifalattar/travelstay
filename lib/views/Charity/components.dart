@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
 
@@ -76,7 +77,31 @@ class CharityMessageContainer extends StatelessWidget {
               ],
             ),
             TravelStayButton(
-                onPressed: () {},
+                onPressed: () {
+                  TravelStayCubit.get(context)
+                      .sendFeedbackForm(
+                          email: email_charity.text,
+                          message: message_charity.text,
+                          mobile: mobile_charity.text)
+                      .then((onValue) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        "Message sent successfully",
+                        style: themeData.textTheme.bodyMedium,
+                      ),
+                      backgroundColor: Colors.green,
+                    ));
+                  }).catchError((onError) {
+                    print(onError);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        "$onError",
+                        style: themeData.textTheme.bodyMedium,
+                      ),
+                      backgroundColor: Colors.red,
+                    ));
+                  });
+                },
                 child: Text(
                   "Send Message",
                   style: themeData.textTheme.headlineLarge,
