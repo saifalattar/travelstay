@@ -3,13 +3,12 @@ import "dart:html" as html;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_popup/flutter_popup.dart';
-import 'package:travelstay/Models/localDatabase.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/bloc_currency_nat/cubit.dart';
 import 'package:travelstay/bloc_currency_nat/states.dart';
 import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
+import 'package:travelstay/shared_prefrences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Here we are going to add the most used widgets in the website
@@ -72,8 +71,11 @@ class TravelStayButton extends ElevatedButton {
 
 class TravelStayAppBar extends PreferredSize {
   final BuildContext context;
-  TravelStayAppBar({super.key, required this.context})
-      : super(
+
+  TravelStayAppBar({
+    super.key,
+    required this.context,
+  }) : super(
             preferredSize: Size(double.infinity,
                 MediaQuery.sizeOf(context).width < 800 ? 100 : 150),
             child: Container(
@@ -128,158 +130,208 @@ class TravelStayAppBar extends PreferredSize {
                                               width: 30))
                                     ],
                                   ),
-                                  FutureBuilder(
-                                      future: TravelStayCubit.get(context)
-                                          .isSignedIn(),
-                                      builder: (ctx, ss) {
-                                        if (ss.connectionState ==
-                                            ConnectionState.done) {
-                                          if (ss.hasData) {
-                                            return Row(
-                                              children: [
-                                                const CircleAvatar(
-                                                  child: Icon(Icons.person),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                CustomPopup(
-                                                  content: SizedBox(
-                                                    height: 100,
-                                                    width: 200,
-                                                    child: Column(
-                                                      children: [
-                                                        TravelStayButton(
-                                                          onPressed: () async {
-                                                            var localData =
-                                                                LocalData();
-                                                            await localData
-                                                                .deleteAll();
-                                                            USEREMAIL = null;
-                                                            USERNAME = null;
-                                                            USERTOKEN = null;
-                                                            Functions
-                                                                .navigateWithInSameTab(
-                                                                    context,
-                                                                    "/");
-                                                          },
-                                                          color: Colors.red,
-                                                          child: const Text(
-                                                            "Sign Out",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  child: Text("$USEREMAIL"),
-                                                )
-                                              ],
-                                            );
-                                          } else {
-                                            return Row(
-                                              children: [
-                                                TravelStayButton(
-                                                    hasBorder: true,
-                                                    onPressed: () {
-                                                      Functions
-                                                          .navigateWithInSameTab(
-                                                              context,
-                                                              "/Registeration");
-                                                    },
-                                                    child: Text(
-                                                      "Sign Up",
-                                                      style: themeData.textTheme
-                                                          .titleMedium,
-                                                    )),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                TravelStayButton(
-                                                    hasBorder: true,
-                                                    onPressed: () {
-                                                      Functions
-                                                          .navigateWithInSameTab(
-                                                              context,
-                                                              "/Login");
-                                                    },
-                                                    child: Text(
-                                                      "Log In",
-                                                      style: themeData.textTheme
-                                                          .titleMedium,
-                                                    ))
-                                              ],
-                                            );
-                                          }
-                                        } else {
-                                          return const CircularProgressIndicator();
-                                        }
-                                      }),
                                   BlocBuilder<BlocCurrenciesNatCubit,
                                           BlocCurrenciesNatStates>(
                                       builder: (context, state) {
                                     final cubit =
                                         BlocCurrenciesNatCubit.get(context);
-
-                                    return Row(
-                                      children: [
-                                        Container(
+                                    if (context
+                                            .read<TravelStayCubit>()
+                                            .isSigned ==
+                                        true) {
+                                      return Row(
+                                        children: [
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.blue),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: DropdownButton<dynamic>(
+                                                  value: cubit.selectedCurrency,
+                                                  onChanged: (value) {},
+                                                  icon: const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left:
+                                                            8.0), // Padding to space out the icon
+                                                    child: Icon(
+                                                        Icons.arrow_drop_down),
+                                                  ),
+                                                  iconSize: 24,
+                                                  underline:
+                                                      const SizedBox(), // Remove the default underline
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16,
+                                                  ),
+                                                  dropdownColor: Colors.white,
+                                                  items: cubit.currencies
+                                                      .map((dynamic currency) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: cubit
+                                                          .selectedCurrency,
+                                                      child: Row(
+                                                        children: [
+                                                          const Icon(
+                                                              Icons.money,
+                                                              color: Colors
+                                                                  .blue), // Currency icon
+                                                          const SizedBox(
+                                                              width: 8),
+                                                          Text(currency),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }).toList())),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const CircleAvatar(
+                                            child: Icon(Icons.person),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text("$USEREMAIL")
+                                        ],
+                                      );
+                                    } else if (context
+                                            .read<TravelStayCubit>()
+                                            .isSigned ==
+                                        false) {
+                                      return Row(
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            padding: const EdgeInsets.all(4),
                                             decoration: BoxDecoration(
+                                              color: Colors.white,
                                               border: Border.all(
                                                   color: Colors.blue),
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),
-                                            child: DropdownButton<dynamic>(
-                                                value: cubit.selectedCurrency,
-                                                onChanged: (value) {},
-                                                icon: const Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left:
-                                                          8.0), // Padding to space out the icon
-                                                  child: Icon(
-                                                      Icons.arrow_drop_down),
-                                                ),
-                                                iconSize: 24,
-                                                underline:
-                                                    const SizedBox(), // Remove the default underline
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                ),
-                                                dropdownColor: Colors.white,
-                                                items: cubit.currencies
-                                                    .map((dynamic currency) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value:
-                                                        cubit.selectedCurrency,
-                                                    child: Row(
-                                                      children: [
-                                                        const Icon(Icons.money,
-                                                            color: Colors
-                                                                .blue), // Currency icon
-                                                        const SizedBox(
-                                                            width: 8),
-                                                        Text(currency),
-                                                      ],
-                                                    ),
-                                                  );
-                                                }).toList())),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const CircleAvatar(
-                                          child: Icon(Icons.person),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("$USEREMAIL")
-                                      ],
-                                    );
+                                            child: DropdownButton(
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down),
+                                              iconSize: 24,
+                                              underline: const SizedBox(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                              ),
+                                              dropdownColor: Colors.white,
+                                              iconEnabledColor: Colors.black,
+                                              iconDisabledColor: Colors.black,
+                                              value: CacheHelper.getActualData(
+                                                      key: "nationality") ??
+                                                  cubit.selectedNationality,
+                                              items: cubit.nationalities
+                                                  .map((dynamic value) {
+                                                return DropdownMenuItem(
+                                                  value: value,
+                                                  child: Row(
+                                                    children: [
+                                                      const Icon(Icons.money,
+                                                          color: Colors
+                                                              .blue), // Currency icon
+                                                      const SizedBox(width: 8),
+                                                      Text(value),
+                                                    ],
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                cubit.updateNationality(
+                                                    value.toString());
+                                              },
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              border: Border.all(
+                                                  color: Colors.blue),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: DropdownButton(
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down),
+                                              iconSize: 24,
+                                              underline:
+                                                  const SizedBox(), // Remove the default underline
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                              ),
+                                              dropdownColor: Colors.white,
+                                              iconEnabledColor: Colors.black,
+                                              iconDisabledColor: Colors.black,
+                                              value: CacheHelper.getData(
+                                                      key: "currency")
+                                                  ? CacheHelper.getActualData(
+                                                      key: "currency")
+                                                  : cubit.selectedCurrency,
+                                              items: cubit.currencies
+                                                  .map((dynamic value) {
+                                                return DropdownMenuItem(
+                                                  value: value,
+                                                  child: Row(
+                                                    children: [
+                                                      const Icon(Icons.money,
+                                                          color: Colors
+                                                              .blue), // Currency icon
+                                                      const SizedBox(width: 8),
+                                                      Text(value),
+                                                    ],
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                cubit.updateCurrency(
+                                                    value.toString());
+                                              },
+                                            ),
+                                          ),
+                                          const SizedBox(width: 15),
+                                          TravelStayButton(
+                                              hasBorder: true,
+                                              onPressed: () {
+                                                Functions.navigateWithInSameTab(
+                                                    context, "/Registeration");
+                                              },
+                                              child: Text(
+                                                "Sign Up",
+                                                style: themeData
+                                                    .textTheme.titleMedium,
+                                              )),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          TravelStayButton(
+                                              hasBorder: true,
+                                              onPressed: () {
+                                                Functions.navigateWithInSameTab(
+                                                    context, "/Login");
+                                              },
+                                              child: Text(
+                                                "Log In",
+                                                style: themeData
+                                                    .textTheme.titleMedium,
+                                              ))
+                                        ],
+                                      );
+                                    } else {
+                                      return const SizedBox();
+                                    }
                                   })
                                 ],
                               ),

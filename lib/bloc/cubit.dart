@@ -16,18 +16,17 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
       BlocProvider.of<TravelStayCubit>(context);
 
   TextEditingController searchCityController = TextEditingController();
-
+  bool isSigned = false;
   Future isSignedIn() async {
     var localData = LocalData();
     if (await localData.containsKey("token")) {
       USERTOKEN = await localData.getData("token");
       USEREMAIL = await localData.getData("email");
       print("true");
-
-      return true;
+      isSigned = true;
     } else {
       print("FALSE");
-      return false;
+      isSigned = false;
     }
   }
 
