@@ -53,10 +53,17 @@ packages:
     dependency: "direct main"
     description:
       name: carousel_slider
+<<<<<<< HEAD
       sha256: "7b006ec356205054af5beaef62e2221160ea36b90fb70a35e4deacd49d0349ae"
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+=======
+      sha256: "9c695cc963bf1d04a47bd6021f68befce8970bcd61d24938e1fb0918cf5d9c42"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
+>>>>>>> khaled
   characters:
     dependency: transitive
     description:
@@ -206,6 +213,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.3+1"
+<<<<<<< HEAD
   flutter_popup:
     dependency: "direct main"
     description:
@@ -214,6 +222,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+=======
+>>>>>>> khaled
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -281,7 +291,11 @@ packages:
     source: hosted
     version: "14.2.8"
   http:
+<<<<<<< HEAD
     dependency: "direct main"
+=======
+    dependency: transitive
+>>>>>>> khaled
     description:
       name: http
       sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
@@ -729,10 +743,17 @@ packages:
     dependency: transitive
     description:
       name: vm_service
+<<<<<<< HEAD
       sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
     version: "14.2.5"
+=======
+      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.2.4"
+>>>>>>> khaled
   web:
     dependency: transitive
     description:

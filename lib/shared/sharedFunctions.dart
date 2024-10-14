@@ -7,6 +7,12 @@ class Functions {
     html.window.open("/#$newScreen", '_blank');
   }
 
+  static void navigateWithNewTabQuery(
+      context, String newScreen, Object? query) {
+    // html.window.open("/#$newScreen?query=$query", newScreen);
+    Navigator.pushNamed(context, newScreen, arguments: query);
+  }
+
   static void navigateWithInSameTab(
     BuildContext context,
     String newScreen, {

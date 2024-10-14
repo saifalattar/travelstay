@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/views/Hotels/models/hotels_info.dart';
-import 'package:http/http.dart' as http;
 
 abstract class _ServiceProviderInterface {
   Future login_request({
@@ -54,7 +54,7 @@ class ServiceProvider implements _ServiceProviderInterface {
   Future login_request(
       {required String? userEmail, required String? password}) async {
     Response loggedUser = await Dio().post(
-        'http://cloudcft.com:8048/api/authenticate',
+        'https://travelstay247.co.uk/api/authenticate/',
         data: {"username": userEmail, "password": password});
     return loggedUser;
   }

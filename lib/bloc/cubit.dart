@@ -64,7 +64,6 @@ class TravelStayCubit extends Cubit<TravelStayStates> {
       required String? userFirstName,
       required String? userLastName}) async {
     Map? response;
-
     await _services
         .signup_request(
             userEmail: userEmail,

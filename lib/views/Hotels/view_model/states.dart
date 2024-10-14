@@ -2,6 +2,8 @@ abstract class HotelsStates {}
 
 class HotelsInitialState extends HotelsStates {}
 
+class HotelsLoadingState extends HotelsStates {}
+
 class HotelsSuccessState extends HotelsStates {}
 
 class HotelsErrorState extends HotelsStates {

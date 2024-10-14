@@ -34,3 +34,23 @@ class PasswordVisibility extends TravelStayStates {
   final bool value;
   PasswordVisibility({required this.value});
 }
+
+class CurrenciesState extends TravelStayStates {
+  final List currencies;
+  CurrenciesState({required this.currencies});
+}
+
+class CurrencyState extends TravelStayStates {
+  final String currency;
+  CurrencyState({required this.currency});
+}
+
+class NationalityState extends TravelStayStates {
+  final String nationality;
+  NationalityState({required this.nationality});
+}
+
+class NationalitiesState extends TravelStayStates {
+  final List nationalities;
+  NationalitiesState({required this.nationalities});
+}

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/web.dart';
 import 'package:travelstay/views/Hotels/models/hotels_info.dart';
 import 'package:travelstay/views/Hotels/view_model/states.dart';
 
@@ -21,6 +22,8 @@ class HotelsCubit extends Cubit<HotelsStates> {
       required String currency,
       required String nationality}) async {
     try {
+      emit(HotelsLoadingState());
+      hotelApiResponse = null;
       var response = await Dio()
           .post("https://travelstay247.co.uk/hotel/api/hotel/price", data: {
         "cityId": cityId,
@@ -36,10 +39,27 @@ class HotelsCubit extends Cubit<HotelsStates> {
         "currency": currency,
         "nationality": nationality
       });
+      Logger().i({
+        "cityId": cityId,
+        "checkInDate": checkIn,
+        "checkOutDate": checkOut,
+        "roomCount": roomCount,
+        "occupancy": {
+          "adultCount": adultCount,
+          "childCount": childCount,
+          "roomNum": roomNum,
+          "childAgeDetails": childAgeDetails
+        },
+        "currency": "US",
+        "nationality": "USD"
+      });
+
+      Logger().i(response.data);
+
       hotelApiResponse = HotelApiResponse.fromJson(response.data);
       emit(HotelsSuccessState());
     } catch (e) {
-      print(e.toString());
+      Logger().f(e.toString());
       emit(HotelsErrorState(e.toString()));
     }
   }

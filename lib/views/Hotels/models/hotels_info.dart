@@ -14,8 +14,9 @@ class PriceDetails {
       checkInDate: DateTime.parse(json['checkInDate']),
       checkOutDate: DateTime.parse(json['checkOutDate']),
       hotelList: (json['hotelList'] as List)
-          .map((hotel) => Hotel.fromJson(hotel))
-          .toList(),
+              .map((hotel) => Hotel.fromJson(hotel))
+              .toList() ??
+          [],
     );
   }
 }
@@ -254,32 +255,15 @@ class HotelApiResponse {
   final String status;
 
   // Step 1: Create a private static variable to hold the instance
-  static HotelApiResponse? _instance;
 
   // Step 2: Make the constructor private
-  HotelApiResponse._internal({
+  HotelApiResponse({
     required this.payload,
     required this.status,
   });
 
-  // Step 3: Add a factory constructor that returns the single instance
-  factory HotelApiResponse({
-    required Payload payload,
-    required String status,
-  }) {
-    return _instance ??= HotelApiResponse._internal(
-      payload: payload,
-      status: status,
-    );
-  }
-
-  static void resetInstance() {
-    _instance = null;
-  }
-
-  // Method to create the instance from JSON
   factory HotelApiResponse.fromJson(Map<String, dynamic> json) {
-    return _instance ??= HotelApiResponse._internal(
+    return HotelApiResponse(
       payload: Payload.fromJson(json['payload']),
       status: json['status'],
     );

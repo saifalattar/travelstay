@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelstay/bloc/cubit.dart';
 import 'package:travelstay/bloc/states.dart';
+import 'package:travelstay/bloc_currency_nat/cubit.dart';
 import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:travelstay/shared/sharedWidgets.dart';
+import 'package:travelstay/shared_prefrences.dart';
 import 'package:travelstay/views/HomeScreen/components.dart';
 import 'package:travelstay/views/HomeScreen/date_range.dart';
 import 'package:travelstay/views/HomeScreen/number_of_persons.dart';
@@ -329,23 +331,13 @@ class _SearchForHotelsBarState extends State<SearchForHotelsBar> {
               "childAgeDetails": childAgeDetails,
               'cityName':
                   context.read<TravelStayCubit>().searchCityController.text,
-              "currency": "USD",
-              "nationality": "US"
+              "currency": CacheHelper.getData(key: "currency")
+                  ? CacheHelper.getActualData(key: "currency")
+                  : context.read<BlocCurrenciesNatCubit>().selectedCurrency,
+              "nationality": CacheHelper.getData(key: "nationality")
+                  ? CacheHelper.getActualData(key: "nationality")
+                  : context.read<BlocCurrenciesNatCubit>().selectedNationality
             });
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => HotelsScreen(
-            //             cityId: cityId,
-            //             checkInDate: checkIn.toString().substring(0, 11),
-            //             checkoutDate: checkOut.toString().substring(0, 11),
-            //             roomCount: roomsNumbers,
-            //             adultCount: adultsNumbers,
-            //             childCount: childrenNumbers,
-            //             roomNum: roomsNumbers,
-            //             childAgeDetails: const [],
-            //             currency: "USD",
-            //             nationality: "US")));
           },
           hasBorder: true,
           child: Text(

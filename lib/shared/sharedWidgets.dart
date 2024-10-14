@@ -4,9 +4,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_popup/flutter_popup.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelstay/Models/localDatabase.dart';
 import 'package:travelstay/bloc/cubit.dart';
+import 'package:travelstay/bloc_currency_nat/cubit.dart';
+import 'package:travelstay/bloc_currency_nat/states.dart';
 import 'package:travelstay/shared/sharedFunctions.dart';
 import 'package:travelstay/shared/sharedVariables.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -133,7 +134,7 @@ class TravelStayAppBar extends PreferredSize {
                                       builder: (ctx, ss) {
                                         if (ss.connectionState ==
                                             ConnectionState.done) {
-                                          if (ss.data) {
+                                          if (ss.hasData) {
                                             return Row(
                                               children: [
                                                 const CircleAvatar(
@@ -215,7 +216,71 @@ class TravelStayAppBar extends PreferredSize {
                                         } else {
                                           return const CircularProgressIndicator();
                                         }
-                                      })
+                                      }),
+                                  BlocBuilder<BlocCurrenciesNatCubit,
+                                          BlocCurrenciesNatStates>(
+                                      builder: (context, state) {
+                                    final cubit =
+                                        BlocCurrenciesNatCubit.get(context);
+
+                                    return Row(
+                                      children: [
+                                        Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.blue),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: DropdownButton<dynamic>(
+                                                value: cubit.selectedCurrency,
+                                                onChanged: (value) {},
+                                                icon: const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left:
+                                                          8.0), // Padding to space out the icon
+                                                  child: Icon(
+                                                      Icons.arrow_drop_down),
+                                                ),
+                                                iconSize: 24,
+                                                underline:
+                                                    const SizedBox(), // Remove the default underline
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                ),
+                                                dropdownColor: Colors.white,
+                                                items: cubit.currencies
+                                                    .map((dynamic currency) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value:
+                                                        cubit.selectedCurrency,
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(Icons.money,
+                                                            color: Colors
+                                                                .blue), // Currency icon
+                                                        const SizedBox(
+                                                            width: 8),
+                                                        Text(currency),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }).toList())),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const CircleAvatar(
+                                          child: Icon(Icons.person),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text("$USEREMAIL")
+                                      ],
+                                    );
+                                  })
                                 ],
                               ),
                             ),
@@ -449,8 +514,9 @@ class MasjidBanner extends StatelessWidget {
       children: [
         Image.asset(
           "assets/common-banner.png",
-          height: 400,
-          fit: BoxFit.fitHeight,
+          height: MediaQuery.sizeOf(context).height * 0.3,
+          width: double.infinity,
+          fit: BoxFit.fill,
         ),
         Column(
           children: [
@@ -844,7 +910,7 @@ class TravelStayDrawer extends Drawer {
                         future: context.read<TravelStayCubit>().isSignedIn(),
                         builder: (ctx, ss) {
                           if (ss.connectionState == ConnectionState.done) {
-                            if (ss.data) {
+                            if (ss.data == true) {
                               return SizedBox(
                                 width: double.infinity,
                                 child: TravelStayButton(

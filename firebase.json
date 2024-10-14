@@ -23,7 +23,11 @@
     }
   },
   "hosting": {
+<<<<<<< HEAD
     "public": "buid/web",
+=======
+    "public": "build/web",
+>>>>>>> khaled
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -31,10 +35,13 @@
     ],
     "rewrites": [
       {
+<<<<<<< HEAD
         "source": "/api/**",
         "destination": "proxy"
       },
       {
+=======
+>>>>>>> khaled
         "source": "**",
         "destination": "/index.html"
       }
