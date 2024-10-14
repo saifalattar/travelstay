@@ -1,0 +1,55 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "travelstay247-b91d8",
+          "appId": "1:895090008251:android:b0d061ed84aef26249499e",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "travelstay247-b91d8",
+          "configurations": {
+            "android": "1:895090008251:android:b0d061ed84aef26249499e",
+            "ios": "1:895090008251:ios:00588c50fd4a481849499e",
+            "macos": "1:895090008251:ios:00588c50fd4a481849499e",
+            "web": "1:895090008251:web:e415f6a1f928ba0e49499e",
+            "windows": "1:895090008251:web:1fe98ce2d6a0843849499e"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ]
+}

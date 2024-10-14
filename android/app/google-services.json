@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "895090008251",
+    "project_id": "travelstay247-b91d8",
+    "storage_bucket": "travelstay247-b91d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895090008251:android:b0d061ed84aef26249499e",
+        "android_client_info": {
+          "package_name": "com.example.travelstay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAITGZS3eIMOnGONE4I6RVyPjCSZnEnHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
